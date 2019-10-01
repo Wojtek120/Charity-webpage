@@ -1,14 +1,18 @@
 package pl.coderslab.charity.model.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.InstitutionDto;
 import pl.coderslab.charity.model.dto.InstitutionDto;
 import pl.coderslab.charity.model.entities.Institution;
 import pl.coderslab.charity.model.repositories.InstitutionRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class InstitutionService implements ServiceInterface<InstitutionDto, Institution> {
     
     private final ModelMapper modelMapper;
@@ -58,5 +62,9 @@ public class InstitutionService implements ServiceInterface<InstitutionDto, Inst
     @Override
     public Institution convertToEntity(InstitutionDto dto) {
         return modelMapper.map(dto, Institution.class);
+    }
+
+    public int getNumberOfInstitutions(){
+        return institutionRepository.getNumberOfInstitutions();
     }
 }

@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -15,5 +17,5 @@ public class Category extends BaseEntity {
     @Column(nullable = false)
     private String name;
     @ManyToMany(mappedBy = "categories")
-    private Donation donation;
+    private List<Donation> donation = new ArrayList<>();
 }

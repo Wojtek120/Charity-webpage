@@ -5,7 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
+
 
 @Entity
 @Getter @Setter
@@ -14,6 +16,6 @@ public class Institution extends BaseEntity {
     @Column(nullable = false)
     private String name;
     private String description;
-    @OneToOne(mappedBy = "institution")
-    private Donation donation;
+    @OneToMany(mappedBy = "institution")
+    private List<Donation> donation;
 }

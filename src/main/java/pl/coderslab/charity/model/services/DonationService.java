@@ -1,13 +1,17 @@
 package pl.coderslab.charity.model.services;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.DonationDto;
 import pl.coderslab.charity.model.entities.Donation;
 import pl.coderslab.charity.model.repositories.DonationRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@Transactional
 public class DonationService implements ServiceInterface<DonationDto, Donation> {
 
     private final ModelMapper modelMapper;
@@ -57,6 +61,10 @@ public class DonationService implements ServiceInterface<DonationDto, Donation> 
     @Override
     public Donation convertToEntity(DonationDto dto) {
         return modelMapper.map(dto, Donation.class);
+    }
+
+    public int getQuantitySum(){
+        return donationRepository.getQuantitySum();
     }
 
 }
