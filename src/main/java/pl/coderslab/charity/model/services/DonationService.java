@@ -3,10 +3,13 @@ package pl.coderslab.charity.model.services;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.DonationDto;
+import pl.coderslab.charity.model.entities.Category;
 import pl.coderslab.charity.model.entities.Donation;
+import pl.coderslab.charity.model.entities.Institution;
 import pl.coderslab.charity.model.repositories.DonationRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +63,21 @@ public class DonationService implements ServiceInterface<DonationDto, Donation> 
 
     @Override
     public Donation convertToEntity(DonationDto dto) {
-        return modelMapper.map(dto, Donation.class);
+        Donation donation = modelMapper.map(dto, Donation.class);
+
+        List<Category> categories = new ArrayList<>();
+        for (Long categoryId : dto.getCategories()) {
+            Category category = new Category();
+            category.setId(categoryId);
+            categories.add(category);
+        }
+        donation.setCategories(categories);
+
+        Institution institution = new Institution();
+        institution.setId(dto.getInstitution());
+        donation.setInstitution(institution);
+
+        return donation;
     }
 
     public int getQuantitySum(){

@@ -2,10 +2,13 @@ package pl.coderslab.charity.model.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +23,15 @@ public class Donation extends BaseEntity {
     @Column(name = "zip_code")
     private String zipCode;
     @Column(name = "pick_up_date")
-    private Date pickUpDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate pickUpDate;
     @Column(name = "pick_up_time")
-    private Time pickUpTime;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
+    private LocalTime pickUpTime;
     @Column(name = "pick_up_comment")
     private String pickUpComment;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @ManyToMany
     private List<Category> categories = new ArrayList<>();
