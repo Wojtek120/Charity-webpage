@@ -20,8 +20,8 @@
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
-                Zacznij pomagać!<br/>
-                Oddaj niechciane rzeczy w zaufane ręce
+                <spring:message code="main-start.helping"/> <br/>
+                <spring:message code="main-start.give.unwanted.things.in.goog.hands"/>
             </h1>
         </div>
     </div>
@@ -32,55 +32,52 @@
         <div class="stats--item">
             <em>${quantitySum}</em>
 
-            <h3>Oddanych worków</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum
-                tempora!</p>
+            <h3><spring:message code="main-given.bags"/></h3>
+            <p><spring:message code="main-lorem1"/> </p>
         </div>
 
         <div class="stats--item">
             <em>${institutionsNumber}</em>
-            <h3>Wspartych organizacji</h3>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate quas
-                quam.</p>
+            <h3><spring:message code="main-donated.institutions"/></h3>
+            <p><spring:message code="main-lorem2"/></p>
         </div>
 
     </div>
 </section>
 
 <section class="steps">
-    <h2>Wystarczą 4 proste kroki</h2>
+    <h2><spring:message code="main-only.4.steps"/></h2>
 
     <div class="steps--container">
         <div class="steps--item">
             <span class="icon icon--hands"></span>
-            <h3>Wybierz rzeczy</h3>
-            <p>ubrania, zabawki, sprzęt i inne</p>
+            <h3><spring:message code="main-select.items"/></h3>
+            <p><spring:message code="main-select.examples.of.items"/></p>
         </div>
         <div class="steps--item">
             <span class="icon icon--arrow"></span>
-            <h3>Spakuj je</h3>
-            <p>skorzystaj z worków na śmieci</p>
+            <h3><spring:message code="main-pack.it"/></h3>
+            <p><spring:message code="main-use.bags"/></p>
         </div>
         <div class="steps--item">
             <span class="icon icon--glasses"></span>
-            <h3>Zdecyduj komu chcesz pomóc</h3>
-            <p>wybierz zaufane miejsce</p>
+            <h3><spring:message code="main-decide.who.you.want.to.give.it"/></h3>
+            <p><spring:message code="main-select.your.place"/></p>
         </div>
         <div class="steps--item">
             <span class="icon icon--courier"></span>
-            <h3>Zamów kuriera</h3>
-            <p>kurier przyjedzie w dogodnym terminie</p>
+            <h3><spring:message code="main-get.courier.out"/></h3>
+            <p><spring:message code="main-courier.info"/></p>
         </div>
     </div>
 
-    <a href="#" class="btn btn--large">Załóż konto</a>
+    <a href="#" class="btn btn--large"><spring:message code="main-create.account"/></a>
 </section>
 
 <section class="about-us">
     <div class="about-us--text">
-        <h2>O nas</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt libero
-            optio esse quisquam illo omnis.</p>
+        <h2><spring:message code="main-about"/></h2>
+        <p><spring:message code="main-lorem1"/></p>
         <img src="<c:url value="/resources/images/signature.svg"/>" class="about-us--text-signature" alt="Signature"/>
     </div>
     <div class="about-us--image"><img src="<c:url value="/resources/images/about-us.jpg"/>" alt="People in circle"/>
@@ -88,12 +85,11 @@
 </section>
 
 <section class="help">
-    <h2>Komu pomagamy?</h2>
+    <h2><spring:message code="main-who.do.we.help"/></h2>
 
     <!-- SLIDE 1 -->
     <div class="help--slides active" data-id="1">
-        <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy.
-            Możesz sprawdzić czym się zajmują.</p>
+        <p><spring:message code="main-institutions.info"/></p>
 
         <ul class="help--slides-items">
 
@@ -112,19 +108,6 @@
                     </li>
                 </c:if>
             </c:forEach>
-
-
-            <%--            <li>--%>
-            <%--                <div class="col">--%>
-            <%--                    <div class="title">Fundacja “Dla dzieci"</div>--%>
-            <%--                    <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.</div>--%>
-            <%--                </div>--%>
-            <%--                <div class="col">--%>
-            <%--                    <div class="title">Fundacja “Bez domu”</div>--%>
-            <%--                    <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>--%>
-            <%--                </div>--%>
-
-            <%--            </li>--%>
 
         </ul>
     </div>
