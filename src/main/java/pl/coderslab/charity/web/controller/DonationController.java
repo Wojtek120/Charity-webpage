@@ -7,9 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.charity.model.dto.DonationDto;
-import pl.coderslab.charity.model.services.CategoryService;
-import pl.coderslab.charity.model.services.DonationService;
-import pl.coderslab.charity.model.services.InstitutionService;
+import pl.coderslab.charity.model.services.DonationFormService;
 
 import javax.validation.Valid;
 
@@ -17,22 +15,18 @@ import javax.validation.Valid;
 @Slf4j
 public class DonationController {
 
-    private final CategoryService categoryService;
-    private final InstitutionService institutionService;
-    private final DonationService donationService;
+    private final DonationFormService donationFormService;
 
-    public DonationController(CategoryService categoryService, InstitutionService institutionService, DonationService donationService) {
-        this.categoryService = categoryService;
-        this.institutionService = institutionService;
-        this.donationService = donationService;
+    public DonationController(DonationFormService donationFormService) {
+        this.donationFormService = donationFormService;
     }
 
     @GetMapping("/donation")
     public String prepareDonation(Model model){
 
         model.addAttribute("donationDto", new DonationDto());
-        model.addAttribute("categories", categoryService.getAll());
-        model.addAttribute("institutions", institutionService.getAll());
+        model.addAttribute("categories", donationFormService.getAllCategories());
+        model.addAttribute("institutions", donationFormService.getAllInstitutions());
 
         return "donationForm";
     }
@@ -45,7 +39,7 @@ public class DonationController {
             return "donationForm";
         }
 
-        donationService.save(donationDto);
+        donationFormService.saveDonation(donationDto);
 
         return "redirect:/";
     }

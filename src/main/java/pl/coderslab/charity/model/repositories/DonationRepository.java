@@ -7,6 +7,8 @@ import pl.coderslab.charity.model.entities.Donation;
 public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     @Query("SELECT SUM(d.quantity) FROM Donation d")
-    int getQuantitySum();
+    int getQuantityOfDonatedBags();
 
+    @Query("SELECT COUNT ( DISTINCT d.institution) FROM Donation d")
+    int getNumberOfDonatedInstitutions();
 }
