@@ -16,6 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header class="header--form-page">
@@ -24,24 +27,28 @@
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
-                <spring:message code="donation.form-give.unwanted.things" /><br/>
-                <span class="uppercase"><spring:message code="donation.form-in.need" /></span>
+                <spring:message code="donation.form-give.unwanted.things"/><br/>
+                <span class="uppercase"><spring:message code="donation.form-in.need"/></span>
             </h1>
 
             <div class="slogan--steps">
-                <div class="slogan--steps-title"><spring:message code="donation.form-only.4.steps" /></div>
+                <div class="slogan--steps-title"><spring:message code="donation.form-only.4.steps"/></div>
                 <ul class="slogan--steps-boxes">
                     <li>
-                        <div><em><spring:message code="donation.form-step.1.count"/></em><span><spring:message code="donation.form-step.1.message"/> </span></div>
+                        <div><em><spring:message code="donation.form-step.1.count"/></em><span><spring:message
+                                code="donation.form-step.1.message"/> </span></div>
                     </li>
                     <li>
-                        <div><em><spring:message code="donation.form-step.2.count"/></em><span><spring:message code="donation.form-step.2.message"/></span></div>
+                        <div><em><spring:message code="donation.form-step.2.count"/></em><span><spring:message
+                                code="donation.form-step.2.message"/></span></div>
                     </li>
                     <li>
-                        <div><em><spring:message code="donation.form-step.3.count"/></em><span><spring:message code="donation.form-step.3.message"/></span></div>
+                        <div><em><spring:message code="donation.form-step.3.count"/></em><span><spring:message
+                                code="donation.form-step.3.message"/></span></div>
                     </li>
                     <li>
-                        <div><em><spring:message code="donation.form-step.4.count"/></em><span><spring:message code="donation.form-step.4.message"/></span></div>
+                        <div><em><spring:message code="donation.form-step.4.count"/></em><span><spring:message
+                                code="donation.form-step.4.message"/></span></div>
                     </li>
                 </ul>
             </div>
@@ -78,8 +85,10 @@
                 <c:forEach items="${categories}" var="category">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="checkbox" name="categories" value="${category.id}"/>
-                            <span class="checkbox"><spr:checkbox path="categories" value="${category.id}"/></span>
+                            <input type="checkbox" name="categories" value="${category.id}"
+                                   data-name="${category.name}"/>
+                            <span class="checkbox"><spr:checkbox path="categories" value="${category.id}"
+                                                                 data-name="${category.name}"/></span>
                             <span class="description">${category.name}</span>
                         </label>
                     </div>
@@ -92,12 +101,13 @@
 
             <!-- STEP 2 -->
             <div data-step="2">
-                <h3><spring:message code="donation.form-give.number.of.bags"/> </h3>
+                <h3><spring:message code="donation.form-give.number.of.bags"/></h3>
 
                 <div class="form-group form-group--inline">
                     <label>
                         <spring:message code="donation.form-number.of.bags"/>
-                        <spr:input path="quantity" type="number" name="bags" step="1" min="1"/>
+                        <spr:input path="quantity" type="number" id="bagsQuantity" name="bagsQuantity" step="1"
+                                   min="1"/>
                     </label>
                 </div>
 
@@ -110,12 +120,13 @@
 
             <!-- STEP 4 -->
             <div data-step="3">
-                <h3><spring:message code="donation.form-select.institution"/> </h3>
+                <h3><spring:message code="donation.form-select.institution"/></h3>
 
                 <c:forEach items="${institutions}" var="institution">
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <spr:radiobutton path="institution" value="${institution.id}"/>
+                            <spr:radiobutton path="institution" value="${institution.id}"
+                                             data-name="${institution.name}"/>
                             <span class="checkbox radio"></span>
                             <span class="description">
                   <div class="title">${institution.name}</div>
@@ -141,22 +152,27 @@
                     <div class="form-section--column">
                         <h4><spring:message code="donation.form-adress"/></h4>
                         <div class="form-group form-group--inline">
-                            <label> <spring:message code="donation.form-street"/> <spr:input path="street" type="text" name="address"/> </label>
+                            <label> <spring:message code="donation.form-street"/> <spr:input path="street" type="text"
+                                                                                             name="address"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> <spring:message code="donation.form-city"/> <spr:input path="city" type="text" name="city"/> </label>
+                            <label> <spring:message code="donation.form-city"/> <spr:input path="city" type="text"
+                                                                                           name="city"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                <spring:message code="donation.form-zip.code"/> <spr:input path="zipCode" type="text" name="postcode"/>
+                                <spring:message code="donation.form-zip.code"/> <spr:input path="zipCode" type="text"
+                                                                                           name="postcode"/>
                             </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
-                                <spring:message code="donation.form-phone.number"/> <spr:input path="phoneNumber" type="phone" name="phone"/>
+                                <spring:message code="donation.form-phone.number"/> <spr:input path="phoneNumber"
+                                                                                               type="phone"
+                                                                                               name="phone"/>
                             </label>
                         </div>
                     </div>
@@ -164,17 +180,17 @@
                     <div class="form-section--column">
                         <h4><spring:message code="donation.form-pick.up.date"/></h4>
                         <div class="form-group form-group--inline">
-                            <label> <spring:message code="donation.form-date"/> <spr:input path="pickUpDate" type="date" name="data"/> </label>
+                            <label> <spring:message code="donation.form-date"/> <spr:input path="pickUpDate" type="date"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
-                            <label> <spring:message code="donation.form-time"/> <spr:input path="pickUpTime" type="time" name="time"/> </label>
+                            <label> <spring:message code="donation.form-time"/> <spr:input path="pickUpTime" type="time"/> </label>
                         </div>
 
                         <div class="form-group form-group--inline">
                             <label>
                                 <spring:message code="donation.form-pick.up.comment"/>
-                                <spr:textarea path="pickUpComment" name="more_info" rows="5"></spr:textarea>
+                                <spr:textarea path="pickUpComment" rows="5"></spr:textarea>
                             </label>
                         </div>
                     </div>
@@ -195,42 +211,45 @@
                         <ul>
                             <li>
                                 <span class="icon icon-bag"></span>
-                                <span class="summary--text" id="bagsSummary"><spring:message code="donation.form-bags"/></span>
-<%--                                <span class="summary--text">4 worki ubrań w dobrym stanie dla dzieci</span>--%>
+                                <span id="bagsMessageForOne" style="display:none"><spring:message
+                                        code="donation.form-bag.for.quantity.one" javaScriptEscape="true"/></span>
+                                <span id="bagsMessageForTwoToFour" style="display:none"><spring:message
+                                        code="donation.form-bags.for.quantity.from.two.to.four"
+                                        javaScriptEscape="true"/></span>
+                                <span id="bagsMessageForFiveOrMore" style="display:none"><spring:message
+                                        code="donation.form-bags.for.quantity.five.and.more"
+                                        javaScriptEscape="true"/></span>
+                                <span class="summary--text" id="bagsSummary"></span>
                             </li>
 
                             <li>
                                 <span class="icon icon-hand"></span>
-                                <span class="summary--text"
-                                >Dla fundacji "Mam marzenie" w Warszawie</span
-                                >
+                                <span id="foundationMessage" style="display:none"><spring:message
+                                        code="donation.form-for.foundation" javaScriptEscape="true"/></span>
+                                <span id="foundationSummary" class="summary--text"></span>
                             </li>
                         </ul>
                     </div>
 
                     <div class="form-section form-section--columns">
                         <div class="form-section--column">
-                            <h4><spring:message code="donation.form-adress"/> </h4>
-                            <ul>
-                                <li>Prosta 51</li>
-                                <li>Warszawa</li>
-                                <li>99-098</li>
-                                <li>123 456 789</li>
+                            <h4><spring:message code="donation.form-adress"/></h4>
+                            <ul id="addressSummary">
+                                    <%--Filled in js--%>
                             </ul>
                         </div>
 
                         <div class="form-section--column">
-                            <h4><spring:message code="donation.form-pick.up.date"/> </h4>
-                            <ul>
-                                <li>13/12/2018</li>
-                                <li>15:40</li>
-                                <li>Brak uwag</li>
+                            <h4><spring:message code="donation.form-pick.up.date"/></h4>
+                            <ul id="dateSummary">
+                                    <%--Filled in js--%>
+                                    <%--                                <li>13/12/2018</li>--%>
+                                    <%--                                <li>15:40</li>--%>
+                                    <%--                                <li>Brak uwag</li>--%>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-<%--                <spr:errors path="*"/>--%>
 
                 <div class="form-group form-group--buttons">
                     <button type="button" class="btn prev-step"><spring:message code="donation.form-back"/></button>
