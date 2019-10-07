@@ -23,34 +23,43 @@
     <c:import url="header.jsp"/>
 
 
-<section class="login-page">
-    <h2><spring:message key="registration-make.account"/></h2>
-    <form:form method="post" modelAttribute="newUser">
-        <div class="form-group">
-            <spring:message key="registration-email" var="emailPlaceholder"/>
-            <form:input path="email" type="email" placeholder="${emailPlaceholder}"/>
-        </div>
-        <div class="form-group">
-            <spring:message key="registration-password" var="passwordPlaceholder"/>
-            <form:input path="password" type="password" name="password" placeholder="${passwordPlaceholder}"/>
-        </div>
-        <div class="form-group">
-            <spring:message key="registration-repeat.password" var="repeatPasswordPlaceholder"/>
-            <form:input path="repeatedPassword" type="password" name="password2"
-                        placeholder="${repeatPasswordPlaceholder}"/>
-        </div>
+    <section class="login-page">
+        <h2><spring:message key="registration-make.account"/></h2>
+        <form:form method="post" modelAttribute="newUser">
+            <div class="form-group">
+                <spring:message key="registration-email" var="emailPlaceholder"/>
+                <form:input path="email" type="email" placeholder="${emailPlaceholder}"/>
+            </div>
+            <div class="form-group">
+                <spring:message key="registration-first.name" var="firstNamePlaceholder"/>
+                <form:input path="firstName" placeholder="${firstNamePlaceholder}"/>
+            </div>
+            <div class="form-group">
+                <spring:message key="registration-last.name" var="lastNamePlaceholder"/>
+                <form:input path="lastName" placeholder="${lastNamePlaceholder}"/>
+            </div>
+            <div class="form-group">
+                <spring:message key="registration-password" var="passwordPlaceholder"/>
+                <form:input path="password" type="password" name="password" placeholder="${passwordPlaceholder}"/>
+            </div>
+            <div class="form-group">
+                <spring:message key="registration-repeat.password" var="repeatPasswordPlaceholder"/>
+                <form:input path="repeatedPassword" type="password" name="password2"
+                            placeholder="${repeatPasswordPlaceholder}"/>
+            </div>
 
-        <div class="form-group form-group--buttons">
+            <div class="form-group form-group--buttons">
 
-                <%--            TODO dodaj link do logowania--%>
-            <a href="login.html" class="btn btn--without-border"><spring:message key="registration-log.in"/> </a>
-            <button class="btn" type="submit"><spring:message key="registration-create.account"/></button>
-        </div>
-    </form:form>
-</section>
+                    <%--            TODO dodaj link do logowania--%>
+                <a href="login.html" class="btn btn--without-border"><spring:message key="registration-log.in"/> </a>
+                <button class="btn" type="submit"><spring:message key="registration-create.account"/></button>
+            </div>
+        </form:form>
+    </section>
 </header>
 
 
 <c:import url="footer.jsp"/>
+
 </body>
 </html>

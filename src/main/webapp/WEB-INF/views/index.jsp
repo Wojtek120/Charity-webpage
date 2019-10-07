@@ -33,7 +33,7 @@
             <em>${quantitySum}</em>
 
             <h3><spring:message code="main-given.bags"/></h3>
-            <p><spring:message code="main-lorem1"/> </p>
+            <p><spring:message code="main-lorem1"/></p>
         </div>
 
         <div class="stats--item">
@@ -45,7 +45,7 @@
     </div>
 </section>
 
-<section class="steps">
+<section class="steps" id="steps">
     <h2><spring:message code="main-only.4.steps"/></h2>
 
     <div class="steps--container">
@@ -71,10 +71,10 @@
         </div>
     </div>
 
-    <a href="#" class="btn btn--large"><spring:message code="main-create.account"/></a>
+    <a href="<c:url value="/registration"/>" class="btn btn--large"><spring:message code="main-create.account"/></a>
 </section>
 
-<section class="about-us">
+<section class="about-us" id="about">
     <div class="about-us--text">
         <h2><spring:message code="main-about"/></h2>
         <p><spring:message code="main-lorem1"/></p>
@@ -84,7 +84,7 @@
     </div>
 </section>
 
-<section class="help">
+<section class="help" id="foundations">
     <h2><spring:message code="main-who.do.we.help"/></h2>
 
     <!-- SLIDE 1 -->
@@ -114,7 +114,9 @@
 
 </section>
 
-<c:import url="footer.jsp"/>
+<section id="contact">
+    <c:import url="footer.jsp"/>
+</section>
 
 <script src="<c:url value="/resources/js/app.js"/>"></script>
 </body>

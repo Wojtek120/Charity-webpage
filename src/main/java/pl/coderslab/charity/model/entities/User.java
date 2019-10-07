@@ -27,4 +27,7 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "email", referencedColumnName = "email"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne
+    private UserDetails userDetails;
+
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class UserDto {
+public class UserRegistrationDto {
 
     @Id
     Long id;
@@ -25,5 +25,10 @@ public class UserDto {
     @Length(min = 8)
     private String repeatedPassword;
 
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 }
 
