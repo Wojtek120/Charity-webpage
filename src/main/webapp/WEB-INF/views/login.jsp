@@ -23,18 +23,23 @@
 
 <section class="login-page">
     <h2><spring:message key="logging.page-sign.in"/></h2>
-    <form method="post" action="/login">
+    <form method="post" action="<c:url value="/login"/> ">
         <div class="form-group">
             <input type="email" id="username" name="username" placeholder="<spring:message key="logging.page-email"/>" />
         </div>
+
         <div class="form-group">
             <input type="password" id="password" name="password" placeholder="<spring:message key="logging.page-password"/>" />
             <a href="#" class="btn btn--small btn--without-border reset-password"><spring:message key="logging.page-forgot.password"/></a>
+
+            <c:if test="${not empty param.error}">
+                <h3>Błędne hasło lub email</h3>
+            </c:if>
         </div>
 
-        <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
+
+
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         <div class="form-group form-group--buttons">
             <a href="<c:url value="/registration"/>" class="btn btn--without-border"><spring:message key="logging.page-sign.up"/></a>
