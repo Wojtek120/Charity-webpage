@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.coderslab.charity.model.dto.PasswordDto;
 import pl.coderslab.charity.model.dto.UserDetailsDto;
 import pl.coderslab.charity.model.services.UserService;
 
@@ -49,5 +50,26 @@ public class UserProfileController {
         return "redirect:/user/profile";
     }
 
-    @GetMapping
+    @GetMapping("/edit/password")
+    public String prepareEditPassword(Model model) {
+        model.addAttribute("passwordDto", new PasswordDto());
+
+        return "editPassword";
+    }
+
+    @PostMapping("/edit/password")
+    public String editPassword(@Valid PasswordDto passwordDto, BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "editPassword";
+        }
+
+        if (!passwordDto.getPassword().equals(passwordDto.getRepeatedPassword())) {
+            return "redirect:/user/edit/password?error=true";
+        }
+
+        userService.editPassword(passwordDto);
+
+        return "redirect:/user/profile";
+    }
 }

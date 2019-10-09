@@ -27,26 +27,26 @@
         <h2><spring:message key="edit.profile-title"/></h2>
         <form:form method="post" modelAttribute="user">
             <div class="form-group">
-                <h3>Email</h3>
                 <spring:message key="edit.profile-email" var="emailPlaceholder"/>
+                <h3>${emailPlaceholder}</h3>
                 <form:input path="email" type="email" placeholder="${emailPlaceholder}"/>
                 <form:errors path="email"/>
             </div>
             <div class="form-group">
-                <h3>Imię</h3>
                 <spring:message key="edit.profile-first.name" var="firstNamePlaceholder"/>
+                <h3>${firstNamePlaceholder}</h3>
                 <form:input path="firstName" placeholder="${firstNamePlaceholder}"/>
                 <form:errors path="firstName"/>
             </div>
             <div class="form-group">
-                <h3>Nazwisko</h3>
                 <spring:message key="edit.profile-last.name" var="lastNamePlaceholder"/>
+                <h3>${lastNamePlaceholder}</h3>
                 <form:input path="lastName" placeholder="${lastNamePlaceholder}"/>
                 <form:errors path="lastName"/>
             </div>
             <div class="form-group">
-                <h3>Numer telefonu</h3>
                 <spring:message key="edit.profile-phone.number" var="phoneNumberPlaceholder"/>
+                <h3>${phoneNumberPlaceholder}</h3>
                 <form:input path="phoneNumber" placeholder="${phoneNumberPlaceholder}"/>
                 <form:errors path="phoneNumber"/>
             </div>

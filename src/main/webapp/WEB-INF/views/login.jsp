@@ -33,7 +33,7 @@
             <a href="#" class="btn btn--small btn--without-border reset-password"><spring:message key="logging.page-forgot.password"/></a>
 
             <c:if test="${not empty param.error}">
-                <h3>Błędne hasło lub email</h3>
+                <h3><spring:message key="logging.page-error.message"/></h3>
             </c:if>
         </div>
 

@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.model.dto.PasswordDto;
 import pl.coderslab.charity.model.dto.UserDetailsDto;
 import pl.coderslab.charity.model.dto.UserRegistrationDto;
 import pl.coderslab.charity.model.entities.User;
@@ -88,5 +89,16 @@ public class UserService {
         userDetailsRepository.save(userDetails);
 
         authenticationFacade.setAuthenticationData(user.getEmail(), user.getPassword());
+    }
+
+    @Transactional
+    public void editPassword(PasswordDto passwordDto) {
+
+        if (passwordDto.getPassword().equals(passwordDto.getRepeatedPassword())) {
+            User user = userRepository.getByEmail(authenticationFacade.getName());
+            user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+            userRepository.save(user);
+        }
+
     }
 }
