@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class DonationFormService {
 
     private final ModelMapper modelMapper;
@@ -45,11 +44,10 @@ public class DonationFormService {
         return categoryRepository.findAll().stream().map(this::categoryEntityToDto).collect(Collectors.toList());
     }
 
+    @Transactional
     public void saveDonation(DonationDto dto) {
         donationRepository.save(donationDtoToEntity(dto));
     }
-
-
 
 
     private InstitutionDto institutionEntityToDto(Institution entity) {

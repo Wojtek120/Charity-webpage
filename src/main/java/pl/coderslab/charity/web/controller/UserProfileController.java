@@ -48,4 +48,6 @@ public class UserProfileController {
 
         return "redirect:/user/profile";
     }
+
+    @GetMapping
 }
