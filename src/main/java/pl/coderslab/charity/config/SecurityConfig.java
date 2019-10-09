@@ -34,7 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT email, password, enabled FROM users WHERE email = ?")
-                .authoritiesByUsernameQuery("SELECT email, authority FROM user_authorities WHERE email = ?");
+                .authoritiesByUsernameQuery("SELECT charity_donation.users.email, charity_donation.user_authorities.authority FROM users INNER JOIN user_authorities ON users.id = user_authorities.user_id WHERE users.email = ?");
+//                .authoritiesByUsernameQuery("SELECT email, authority FROM user_authorities WHERE email = ?");
     }
 
 

@@ -17,6 +17,9 @@ public class UserDetails extends BaseEntity {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @OneToOne(mappedBy = "userDetails")
     private User user;
 }

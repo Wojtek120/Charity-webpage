@@ -39,6 +39,10 @@
                 <form:input path="lastName" placeholder="${lastNamePlaceholder}"/>
             </div>
             <div class="form-group">
+                <spring:message key="registration-phone.number" var="phoneNumberPlaceholder"/>
+                <form:input path="phoneNumber" placeholder="${phoneNumberPlaceholder}"/>
+            </div>
+            <div class="form-group">
                 <spring:message key="registration-password" var="passwordPlaceholder"/>
                 <form:input path="password" type="password" name="password" placeholder="${passwordPlaceholder}"/>
             </div>
@@ -50,8 +54,7 @@
 
             <div class="form-group form-group--buttons">
 
-                    <%--            TODO dodaj link do logowania--%>
-                <a href="login.html" class="btn btn--without-border"><spring:message key="registration-log.in"/> </a>
+                <a href="<c:url value="/login"/>" class="btn btn--without-border"><spring:message key="registration-log.in"/> </a>
                 <button class="btn" type="submit"><spring:message key="registration-create.account"/></button>
             </div>
         </form:form>

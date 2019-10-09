@@ -9,7 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class UserRegistrationDto {
+public class UserDetailsDto {
 
     @Id
     Long id;
@@ -19,14 +19,6 @@ public class UserRegistrationDto {
     private String email;
 
     @NotBlank
-    @Length(min = 8)
-    private String password;
-
-    @NotBlank
-    @Length(min = 8)
-    private String repeatedPassword;
-
-    @NotBlank
     private String firstName;
 
     @NotBlank
@@ -34,5 +26,8 @@ public class UserRegistrationDto {
 
     @NumberFormat
     private String phoneNumber;
-}
 
+    public String getFirstAndLastName() {
+        return firstName + " " + lastName;
+    }
+}

@@ -1488,6 +1488,51 @@ header nav ul li:last-of-type {
   margin-top: 20px;
 }
 
+
+
+
+
+
+
+
+
+.help--slides-items .profile {
+  width: 100%;
+  text-align: center;
+}
+
+.help--slides-items .profile .title {
+  font-family: 'Merriweather', serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.help--slides-items .profile .subtitle {
+  font-family: 'Merriweather', serif;
+  font-weight: 300;
+  font-style: light;
+  font-size: 1.2rem;
+}
+
+.help--slides-items .profile .text {
+  font-family: 'Merriweather', serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
 /* line 96, scss/modules/homepage-sections/_help.scss */
 .help--slides-pagination {
   margin-top: 40px;

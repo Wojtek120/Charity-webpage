@@ -17,13 +17,12 @@
 <body>
 <nav class="container container--70">
     <sec:authorize access="isAuthenticated()">
-        <sec:authentication var="user" property="principal" />
 
         <ul class="nav--actions">
             <li class="logged-user">
-                <spring:message key="header-hello"/> ${user.username}
+                <spring:message key="header-hello"/> <%= request.getUserPrincipal().getName() %>
                 <ul class="dropdown">
-                    <li><a href="#"><spring:message key="header-profil"/></a></li>
+                    <li><a href="<c:url value="/user/profile"/>"><spring:message key="header-profil"/></a></li>
                     <li><a href="#"><spring:message key="header-settings"/></a></li>
                     <li><a href="#"><spring:message key="header-donations"/></a></li>
                     <li><a href="javascript:{}" onclick="document.getElementById('logout').submit(); return false;"><spring:message key="header-log.out"/></a></li>

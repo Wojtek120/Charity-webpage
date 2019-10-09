@@ -24,7 +24,7 @@ public class User extends BaseEntity {
 
     @ElementCollection
     @CollectionTable(name = "user_authorities",
-            joinColumns = @JoinColumn(name = "email", referencedColumnName = "email"))
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
     @OneToOne
