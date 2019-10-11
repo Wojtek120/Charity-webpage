@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.coderslab.charity.model.dto.DonationDto;
-import pl.coderslab.charity.model.services.DonationFormService;
+import pl.coderslab.charity.model.services.DonationService;
 
 import javax.validation.Valid;
 
@@ -15,17 +15,17 @@ import javax.validation.Valid;
 @Slf4j
 public class DonationController {
 
-    private final DonationFormService donationFormService;
+    private final DonationService donationService;
 
-    public DonationController(DonationFormService donationFormService) {
-        this.donationFormService = donationFormService;
+    public DonationController(DonationService donationService) {
+        this.donationService = donationService;
     }
 
     @GetMapping("/donation")
     public String prepareDonation(Model model){
         model.addAttribute("donationDto", new DonationDto());
-        model.addAttribute("categories", donationFormService.getAllCategories());
-        model.addAttribute("institutions", donationFormService.getAllInstitutions());
+        model.addAttribute("categories", donationService.getAllCategories());
+        model.addAttribute("institutions", donationService.getAllInstitutions());
 
         return "donationForm";
     }
@@ -38,7 +38,7 @@ public class DonationController {
             return "donationForm";
         }
 
-        donationFormService.saveDonation(donationDto);
+        donationService.saveDonation(donationDto);
 
         return "redirect:/";
     }

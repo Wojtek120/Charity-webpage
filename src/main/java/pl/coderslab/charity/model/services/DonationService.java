@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class DonationFormService {
+public class DonationService {
 
     private final ModelMapper modelMapper;
     private final DonationRepository donationRepository;
@@ -26,7 +26,7 @@ public class DonationFormService {
     private final InstitutionRepository institutionRepository;
 
 
-    public DonationFormService(ModelMapper modelMapper, DonationRepository donationRepository, CategoryRepository categoryRepository, InstitutionRepository institutionRepository) {
+    public DonationService(ModelMapper modelMapper, DonationRepository donationRepository, CategoryRepository categoryRepository, InstitutionRepository institutionRepository) {
         this.modelMapper = modelMapper;
         this.donationRepository = donationRepository;
         this.categoryRepository = categoryRepository;
