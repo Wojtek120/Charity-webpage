@@ -60,8 +60,6 @@ public class UserService {
         UserDetailsDto userDetailsDto = modelMapper.map(userDetailsRepository.getByUserEmail(currentEmail), UserDetailsDto.class);
         userDetailsDto.setEmail(currentEmail);
 
-        System.out.println(userRepository.getPasswordByEmail(currentEmail));
-
         if (userDetailsDto.getPhoneNumber() == null) {
             userDetailsDto.setPhoneNumber("-");
         }
