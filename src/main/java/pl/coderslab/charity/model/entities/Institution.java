@@ -13,7 +13,7 @@ import java.util.List;
 @Getter @Setter
 public class Institution extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
     private String description;
     @OneToMany(mappedBy = "institution")

@@ -1,9 +1,6 @@
 package pl.coderslab.charity.model.services;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.PasswordDto;
@@ -17,7 +14,6 @@ import pl.coderslab.charity.model.repositories.UserRepository;
 import pl.coderslab.charity.utils.AuthenticationFacade;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
 
 @Service
 public class UserService {
