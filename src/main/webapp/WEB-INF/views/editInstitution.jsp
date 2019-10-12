@@ -31,13 +31,13 @@
                 <spring:message code="edit.institution-name" var="namePlaceholder"/>
                 <h3>${namePlaceholder}</h3>
                 <form:input path="name" placeholder="${namePlaceholder}"/>
-                <form:errors path="name"/>
+                <h3><form:errors path="name"/></h3>
             </div>
             <div class="form-group">
                 <spring:message code="edit.institution-description" var="descriptionPlaceholder"/>
                 <h3>${descriptionPlaceholder}</h3>
                 <form:input path="description" placeholder="${descriptionPlaceholder}"/>
-                <form:errors path="description"/>
+                <h3><form:errors path="description"/></h3>
             </div>
 
             <div class="form-group form-group--buttons">

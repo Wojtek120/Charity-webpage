@@ -72,4 +72,5 @@ public class AdminPanelControllerTest {
                 .param("description", RandomStringUtils.randomAlphabetic(8)))
                 .andExpect(redirectedUrl("/admin/institutions"));
     }
+
 }
