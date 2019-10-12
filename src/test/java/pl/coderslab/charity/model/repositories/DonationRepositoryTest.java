@@ -57,6 +57,7 @@ public class DonationRepositoryTest {
 
     }
 
+
     private Donation getDonation(Integer quantity, Institution institution) {
         Donation donation = new Donation();
         donation.setQuantity(quantity);
@@ -72,4 +73,6 @@ public class DonationRepositoryTest {
 
         return institution;
     }
+
+
 }

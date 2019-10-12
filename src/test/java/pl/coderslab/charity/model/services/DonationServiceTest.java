@@ -7,8 +7,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import pl.coderslab.charity.model.dto.CategoryDto;
+import pl.coderslab.charity.model.dto.DonationDto;
 import pl.coderslab.charity.model.dto.InstitutionDto;
 import pl.coderslab.charity.model.entities.Category;
+import pl.coderslab.charity.model.entities.Donation;
 import pl.coderslab.charity.model.entities.Institution;
 import pl.coderslab.charity.model.repositories.CategoryRepository;
 import pl.coderslab.charity.model.repositories.DonationRepository;
@@ -18,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DonationServiceTest {
@@ -91,4 +93,13 @@ public class DonationServiceTest {
         assertEquals(categories.get(1).getId(), categoryDtos.get(1).getId());
     }
 
+    @Test
+    public void saveDonation() {
+        DonationDto donationDto = new DonationDto();
+        Donation donation = new Donation();
+
+        when(modelMapper.map(donationDto, Donation.class)).thenReturn(donation);
+        donationService.saveDonation(donationDto);
+        verify(donationRepository, times(1)).save(donation);
+    }
 }

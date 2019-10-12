@@ -26,8 +26,13 @@
     <section class="help">
         <h2><spring:message code="admin.institutions.profile-title"/></h2>
 
+
         <!-- SLIDE 1 -->
         <div class="help--slides active">
+
+            <h3 style="font-size: 2rem"><a href="<c:url value="/admin/institutions/add"/>"><spring:message
+                    code="admin.institutions.profile-add.new"/></a></h3>
+
             <table>
                 <tr>
                     <th>
@@ -53,8 +58,10 @@
                         <td>${institution.name}</td>
                         <td>${institution.description}</td>
                         <c:url value=""/>
-                        <td><a href="<c:url value="/admin/institutions/edit/${institution.id}"/>"><spring:message code="admin.institutions.edit"/></a></td>
-                        <td><a href="<c:url value="/admin/institutions/delete/${institution.id}"/>"><spring:message code="admin.institutions.delete"/></a></td>
+                        <td><a href="<c:url value="/admin/institutions/edit/${institution.id}"/>"><spring:message
+                                code="admin.institutions.edit"/></a></td>
+                        <td><a href="<c:url value="/admin/institutions/delete/${institution.id}"/>"><spring:message
+                                code="admin.institutions.delete"/></a></td>
                     </tr>
                 </c:forEach>
 

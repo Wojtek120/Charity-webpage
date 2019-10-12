@@ -36,14 +36,14 @@ public class AdminPanelController {
     public String prepareInstitutionToEdit(Model model, @PathVariable Long id) {
         model.addAttribute("institution", adminService.getInstitutionById(id));
 
-        return "editInstitution";
+        return "addEditInstitution";
     }
 
     @PostMapping("/institutions/edit/{id}")
-    public String saveEditedInstitution(@Valid @ModelAttribute("institution") InstitutionDto institution, BindingResult result, Model model) {
+    public String saveEditedInstitution(@Valid @ModelAttribute("institution") InstitutionDto institution, BindingResult result) {
 
         if(result.hasErrors()) {
-            return "editInstitution";
+            return "addEditInstitution";
         }
 
         adminService.saveInstitution(institution);
@@ -51,4 +51,38 @@ public class AdminPanelController {
         return "redirect:/admin/institutions";
     }
 
+    @GetMapping("/institutions/add")
+    public String prepareInstitutionToAdd(Model model) {
+        model.addAttribute("institution", new InstitutionDto());
+
+        return "addEditInstitution";
+    }
+
+    @PostMapping("/institutions/add")
+    public String addNewInstitution(@Valid InstitutionDto institution, BindingResult result) {
+
+        if(result.hasErrors()) {
+            return "addEditInstitution";
+        }
+
+        adminService.saveInstitution(institution);
+
+        return "redirect:/admin/institutions";
+    }
+
+    @GetMapping("/institutions/delete/{id}")
+    public String prepareToDelete(@PathVariable Long id, Model model){
+
+        model.addAttribute("nameOfItemToDelete", adminService.getInstitutionById(id).getName());
+
+        return "deleteConfirmation";
+    }
+
+    @PostMapping("/institutions/delete/{id}")
+    public String deleteInstitution(@PathVariable Long id){
+
+        adminService.deleteInstitution(adminService.getInstitutionById(id));
+
+        return "redirect:/admin/institutions";
+    }
 }

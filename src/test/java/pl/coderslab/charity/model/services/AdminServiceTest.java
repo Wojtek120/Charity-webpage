@@ -8,7 +8,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.modelmapper.ModelMapper;
 import pl.coderslab.charity.model.dto.InstitutionDto;
 import pl.coderslab.charity.model.entities.Institution;
-import pl.coderslab.charity.model.repositories.CategoryRepository;
 import pl.coderslab.charity.model.repositories.DonationRepository;
 import pl.coderslab.charity.model.repositories.InstitutionRepository;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdminServiceTest {
@@ -27,10 +26,12 @@ public class AdminServiceTest {
     private ModelMapper modelMapper;
     @Mock
     private InstitutionRepository institutionRepository;
+    @Mock
+    private DonationRepository donationRepository;
 
     @Before
     public void setUp() {
-        adminService = new AdminService(modelMapper, institutionRepository);
+        adminService = new AdminService(modelMapper, institutionRepository, donationRepository);
     }
 
     @Test
@@ -86,5 +87,25 @@ public class AdminServiceTest {
         assertEquals(institution.getName(), result.getName());
         assertEquals(institution.getDescription(), result.getDescription());
 
+    }
+
+    @Test
+    public void saveInstitution() {
+        InstitutionDto institutionDto = new InstitutionDto();
+        Institution institution = new Institution();
+
+        when(modelMapper.map(institutionDto, Institution.class)).thenReturn(institution);
+        adminService.saveInstitution(institutionDto);
+        verify(institutionRepository, times(1)).save(institution);
+    }
+
+    @Test
+    public void deleteInstitution() {
+        InstitutionDto institutionDto = new InstitutionDto();
+        Institution institution = new Institution();
+
+        when(modelMapper.map(institutionDto, Institution.class)).thenReturn(institution);
+        adminService.deleteInstitution(institutionDto);
+        verify(institutionRepository, times(1)).delete(institution);
     }
 }
