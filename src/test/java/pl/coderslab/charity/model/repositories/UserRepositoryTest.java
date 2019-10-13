@@ -26,7 +26,7 @@ public class UserRepositoryTest {
         //given
         String email = "user@user.pl";
         String password = "pass";
-        User user = getUser(email, password);
+        User user = getAndSaveUser(email, password);
 
         //when
         User result = userRepository.getByEmail(email);
@@ -40,7 +40,7 @@ public class UserRepositoryTest {
         //given
         String email = "user@user.pl";
         String password = "pass";
-        User user = getUser(email, password);
+        User user = getAndSaveUser(email, password);
 
         //when
         User result = userRepository.getByEmail("different@user.pl");
@@ -54,7 +54,7 @@ public class UserRepositoryTest {
         //given
         String email = "user@user.pl";
         String password = "pass";
-        User user = getUser(email, password);
+        User user = getAndSaveUser(email, password);
 
         //when
         String resultPassword = userRepository.getPasswordByEmail(email);
@@ -68,7 +68,7 @@ public class UserRepositoryTest {
         //given
         String email = "user@user.pl";
         String password = "pass";
-        User user = getUser(email, password);
+        User user = getAndSaveUser(email, password);
 
         //when
         String resultPassword = userRepository.getPasswordByEmail("different@user.pl");
@@ -77,7 +77,7 @@ public class UserRepositoryTest {
         assertNull(resultPassword);
     }
 
-    private User getUser(String email, String password) {
+    private User getAndSaveUser(String email, String password) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
