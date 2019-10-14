@@ -82,6 +82,11 @@ public class UserService {
     }
 
 
+    public boolean isUserWithEmailExists(String email) {
+        return (userRepository.getByEmail(email) != null);
+    }
+
+
     public VerificationTokenDto getVerificationTokenByToken(String token) {
         return tokenEntityToDto(verificationTokenRepository.getByToken(token));
     }

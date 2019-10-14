@@ -23,7 +23,7 @@
 
     <section class="help" id="foundations">
         <h2><spring:message code="authentication.info-title"/></h2>
-        <h3 style="font-size: 2rem"><spring:message code="authentication.info-info"/></h3>
+        <h3 style="font-size: 2rem; text-align: center"><spring:message code="authentication.info-info"/></h3>
     </section>
 </header>
 

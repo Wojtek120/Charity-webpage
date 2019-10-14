@@ -29,27 +29,41 @@
             <div class="form-group">
                 <spring:message key="registration-email" var="emailPlaceholder"/>
                 <form:input path="email" type="email" placeholder="${emailPlaceholder}"/>
+                <h3><form:errors path="email"/></h3>
+
+                <c:if test="${not empty userExist}">
+                    <h3><spring:message key="edit.password-error.user.exists"/></h3>
+                </c:if>
             </div>
             <div class="form-group">
                 <spring:message key="registration-first.name" var="firstNamePlaceholder"/>
                 <form:input path="firstName" placeholder="${firstNamePlaceholder}"/>
+                <h3><form:errors path="firstName"/></h3>
             </div>
             <div class="form-group">
                 <spring:message key="registration-last.name" var="lastNamePlaceholder"/>
                 <form:input path="lastName" placeholder="${lastNamePlaceholder}"/>
+                <h3><form:errors path="lastName"/></h3>
             </div>
             <div class="form-group">
                 <spring:message key="registration-phone.number" var="phoneNumberPlaceholder"/>
                 <form:input path="phoneNumber" placeholder="${phoneNumberPlaceholder}"/>
+                <h3><form:errors path="phoneNumber"/></h3>
             </div>
             <div class="form-group">
                 <spring:message key="registration-password" var="passwordPlaceholder"/>
                 <form:input path="password" type="password" name="password" placeholder="${passwordPlaceholder}"/>
+                <h3><form:errors path="password"/></h3>
             </div>
             <div class="form-group">
                 <spring:message key="registration-repeat.password" var="repeatPasswordPlaceholder"/>
                 <form:input path="repeatedPassword" type="password" name="password2"
                             placeholder="${repeatPasswordPlaceholder}"/>
+                <h3><form:errors path="repeatedPassword"/></h3>
+
+                <c:if test="${not empty wrongPass}">
+                    <h3><spring:message key="edit.password-error.message"/></h3>
+                </c:if>
             </div>
 
             <div class="form-group form-group--buttons">

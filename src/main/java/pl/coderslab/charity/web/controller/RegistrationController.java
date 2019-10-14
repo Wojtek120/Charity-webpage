@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
@@ -37,10 +38,19 @@ public class RegistrationController {
 
 
     @PostMapping("/registration")
-    public String registerNewUser(@Valid UserRegistrationDto newUser, BindingResult result, WebRequest webRequest) {
+    public String registerNewUser(@Valid @ModelAttribute("newUser") UserRegistrationDto newUser, BindingResult result, WebRequest webRequest, Model model) {
 
-        //TODO add error messages in view
+        if(userService.isUserWithEmailExists(newUser.getEmail())) {
+            model.addAttribute("userExist", true);
+            return "registration";
+        }
+
         if(result.hasErrors()) {
+            return "registration";
+        }
+
+        if (!newUser.getPassword().equals(newUser.getRepeatedPassword())) {
+            model.addAttribute("wrongPass", true);
             return "registration";
         }
 
