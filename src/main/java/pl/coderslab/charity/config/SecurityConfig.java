@@ -15,10 +15,12 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
+    private final RoleBasedAuthenticationSuccessHandler authenticationSuccessHandler;
 
-    public SecurityConfig(DataSource dataSource){
+    public SecurityConfig(DataSource dataSource, RoleBasedAuthenticationSuccessHandler authenticationSuccessHandler){
         this.dataSource = dataSource;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
     @Bean
@@ -52,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin()
                         .loginPage("/login")
-                        .defaultSuccessUrl("/")
+//                        .defaultSuccessUrl("/")
+                        .successHandler(authenticationSuccessHandler)
                         .failureUrl("/login?error=true")
                         .permitAll()
                 .and()
