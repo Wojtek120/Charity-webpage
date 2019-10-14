@@ -1,13 +1,40 @@
 @import url("https://fonts.googleapis.com/css?family=Merriweather:300,300i,400|Open+Sans:300,400,600&subset=latin-ext");
 
-th, td {
-  border-bottom: 1px solid #ddd;
-  padding: 15px;
+
+.myButton {
+  box-shadow:inset 0px 1px 0px 0px #ffffff;
+  background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+  background-color:#ededed;
+  border-radius:6px;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  cursor:pointer;
+  color:#777777;
+  font-family:Arial;
+  font-size:15px;
+  font-weight:bold;
+  padding:6px 24px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #ffffff;
+}
+.myButton:hover {
+  background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+  background-color:#dfdfdf;
+}
+.myButton:active {
+  position:relative;
+  top:1px;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;}
 
-tr:hover {background-color: #f5f5f5;}
+/*th, td {*/
+/*  border-bottom: 1px solid #ddd;*/
+/*  padding: 15px;*/
+/*}*/
+
+/*tr:nth-child(even) {background-color: #f2f2f2;}*/
+
+/*tr:hover {background-color: #f5f5f5;}*/
 
 
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */

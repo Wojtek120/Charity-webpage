@@ -15,7 +15,15 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+        <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+    <script src="<c:url value="/resources/js/table.js"/>"></script>
 
 </head>
 <body>
@@ -30,10 +38,11 @@
         <!-- SLIDE 1 -->
         <div class="help--slides active">
 
-            <h3 style="font-size: 2rem"><a href="<c:url value="/admin/institutions/add"/>"><spring:message
+            <h3 style="font-size: 2rem"><a class="myButton" href="<c:url value="/admin/institutions/add"/>"><spring:message
                     code="admin.institutions.profile-add.new"/></a></h3>
 
-            <table>
+            <table id="table" class="display" style="width:100%">
+                <thead>
                 <tr>
                     <th>
                         <spring:message code="admin.institutions.no"/>
@@ -51,20 +60,22 @@
                         <spring:message code="admin.institutions.delete"/>
                     </th>
                 </tr>
+                </thead>
 
+                <tbody>
                 <c:forEach items="${institutions}" var="institution" varStatus="status">
                     <tr>
                         <td>${status.count}</td>
                         <td>${institution.name}</td>
                         <td>${institution.description}</td>
                         <c:url value=""/>
-                        <td><a href="<c:url value="/admin/institutions/edit/${institution.id}"/>"><spring:message
+                        <td><a class="myButton" href="<c:url value="/admin/institutions/edit/${institution.id}"/>"><spring:message
                                 code="admin.institutions.edit"/></a></td>
-                        <td><a href="<c:url value="/admin/institutions/delete/${institution.id}"/>"><spring:message
+                        <td><a class="myButton" href="<c:url value="/admin/institutions/delete/${institution.id}"/>"><spring:message
                                 code="admin.institutions.delete"/></a></td>
                     </tr>
                 </c:forEach>
-
+                </tbody>
             </table>
 
 
