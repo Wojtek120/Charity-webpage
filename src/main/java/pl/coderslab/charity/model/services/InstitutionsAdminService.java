@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AdminService {
+public class InstitutionsAdminService {
 
     private final ModelMapper modelMapper;
     private final InstitutionRepository institutionRepository;
     private final DonationRepository donationRepository;
 
-    public AdminService(ModelMapper modelMapper, InstitutionRepository institutionRepository, DonationRepository donationRepository) {
+    public InstitutionsAdminService(ModelMapper modelMapper, InstitutionRepository institutionRepository, DonationRepository donationRepository) {
         this.modelMapper = modelMapper;
         this.institutionRepository = institutionRepository;
         this.donationRepository = donationRepository;

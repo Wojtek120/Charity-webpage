@@ -19,9 +19,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AdminServiceTest {
+public class InstitutionsAdminServiceTest {
 
-    private AdminService adminService;
+    private InstitutionsAdminService institutionsAdminService;
     @Mock
     private ModelMapper modelMapper;
     @Mock
@@ -31,7 +31,7 @@ public class AdminServiceTest {
 
     @Before
     public void setUp() {
-        adminService = new AdminService(modelMapper, institutionRepository, donationRepository);
+        institutionsAdminService = new InstitutionsAdminService(modelMapper, institutionRepository, donationRepository);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AdminServiceTest {
         when(modelMapper.map(institution1, InstitutionDto.class)).thenReturn(institutionDto1);
 
         //when
-        List<InstitutionDto> institutionDtos = adminService.getAllInstitutions();
+        List<InstitutionDto> institutionDtos = institutionsAdminService.getAllInstitutions();
 
         //then
         assertEquals(institutions.get(0).getId(), institutionDtos.get(0).getId());
@@ -80,7 +80,7 @@ public class AdminServiceTest {
         when(modelMapper.map(institution, InstitutionDto.class)).thenReturn(institutionDto);
 
         //when
-        InstitutionDto result = adminService.getInstitutionById(1L);
+        InstitutionDto result = institutionsAdminService.getInstitutionById(1L);
 
         //then
         assertEquals(institution.getId(), result.getId());
@@ -95,7 +95,7 @@ public class AdminServiceTest {
         Institution institution = new Institution();
 
         when(modelMapper.map(institutionDto, Institution.class)).thenReturn(institution);
-        adminService.saveInstitution(institutionDto);
+        institutionsAdminService.saveInstitution(institutionDto);
         verify(institutionRepository, times(1)).save(institution);
     }
 
@@ -105,7 +105,7 @@ public class AdminServiceTest {
         Institution institution = new Institution();
 
         when(modelMapper.map(institutionDto, Institution.class)).thenReturn(institution);
-        adminService.deleteInstitution(institutionDto);
+        institutionsAdminService.deleteInstitution(institutionDto);
         verify(institutionRepository, times(1)).delete(institution);
     }
 }

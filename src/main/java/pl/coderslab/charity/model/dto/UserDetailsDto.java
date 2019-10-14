@@ -27,6 +27,8 @@ public class UserDetailsDto {
     @NumberFormat
     private String phoneNumber;
 
+    private Boolean enabled;
+
     public String getFirstAndLastName() {
         return firstName + " " + lastName;
     }
