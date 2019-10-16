@@ -20,6 +20,7 @@ import pl.coderslab.charity.model.repositories.VerificationTokenRepository;
 import pl.coderslab.charity.utils.AuthenticationFacade;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -61,8 +62,11 @@ public class UserService {
         user.setUserDetails(savedUserDetails);
         userRepository.save(user);
 
+        String token = UUID.randomUUID().toString();
+        createVerificationToken(user, token);
 
-        applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, webRequest.getLocale(), webRequest.getContextPath()));
+
+        applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, webRequest.getLocale(), webRequest.getContextPath(), token));
     }
 
 

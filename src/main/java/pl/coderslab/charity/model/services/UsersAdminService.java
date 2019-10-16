@@ -4,10 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.dto.UserDetailsDto;
 import pl.coderslab.charity.model.entities.User;
+import pl.coderslab.charity.model.entities.UserDetails;
 import pl.coderslab.charity.model.entities.embeddable.Role;
 import pl.coderslab.charity.model.repositories.UserDetailsRepository;
 import pl.coderslab.charity.model.repositories.UserRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +52,7 @@ public class UsersAdminService {
 
     private UserDetailsDto getUserDetails(User user) {
         UserDetailsDto userDetailsDto = modelMapper.map(userDetailsRepository.getByUserEmail(user.getEmail()), UserDetailsDto.class);
+        userDetailsDto.setId(user.getId());
         userDetailsDto.setEnabled(user.getEnabled());
         userDetailsDto.setEmail(user.getEmail());
 
@@ -58,6 +61,33 @@ public class UsersAdminService {
         }
 
         return userDetailsDto;
+    }
+
+
+    public UserDetailsDto getUserById(Long id) {
+
+        User user = userRepository.getOne(id);
+        UserDetailsDto userDetailsDto = modelMapper.map(user, UserDetailsDto.class);
+
+        userDetailsDto.setFirstName(user.getUserDetails().getFirstName());
+        userDetailsDto.setLastName(user.getUserDetails().getLastName());
+        userDetailsDto.setPhoneNumber(user.getUserDetails().getPhoneNumber());
+
+        return userDetailsDto;
+    }
+
+
+    @Transactional
+    public void editProfileUpdate(UserDetailsDto userDetailsDto) {
+
+        String currentEmail = userDetailsDto.getEmail();
+
+        User user = userRepository.getByEmail(currentEmail);
+        user.setEmail(userDetailsDto.getEmail());
+        userRepository.save(user);
+
+        UserDetails userDetails = modelMapper.map(user.getUserDetails(), UserDetails.class);
+        userDetailsRepository.save(userDetails);
     }
 
 }

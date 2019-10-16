@@ -29,14 +29,11 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     }
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
-        User user = event.getUser();
-        String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token);
 
-        String recipientAddress = user.getEmail();
+        String recipientAddress = event.getUser().getEmail();
         String subject = messageSource.getMessage("authentication.email-subject", null, event.getLocale());
         String confirmationUrl
-                = event.getAppUrl() + "/registration/confirm/" + token;
+                = event.getAppUrl() + "/registration/confirm/" + event.getToken();
         String message = messageSource.getMessage("authentication.email-registration", null, event.getLocale());
 
         SimpleMailMessage email = new SimpleMailMessage();
