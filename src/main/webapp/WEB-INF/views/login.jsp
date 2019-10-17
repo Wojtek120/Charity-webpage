@@ -26,6 +26,8 @@
     <form method="post" action="<c:url value="/login"/> ">
         <div class="form-group">
             <input type="email" id="username" name="username" placeholder="<spring:message key="logging.page-email"/>" />
+            <a href="<c:url value="/registration/resend"/>" class="btn btn--small btn--without-border reset-password"><spring:message key="logging.page-forgot.resend.email"/></a>
+
         </div>
 
         <div class="form-group">

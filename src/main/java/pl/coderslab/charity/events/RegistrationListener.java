@@ -5,20 +5,14 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import pl.coderslab.charity.model.entities.User;
-import pl.coderslab.charity.model.services.UserService;
-
-import java.util.UUID;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 
-    private final UserService userService;
     private final MessageSource messageSource;
     private final JavaMailSender javaMailSender;
 
-    public RegistrationListener(UserService userService, MessageSource messageSource, JavaMailSender javaMailSender) {
-        this.userService = userService;
+    public RegistrationListener(MessageSource messageSource, JavaMailSender javaMailSender) {
         this.messageSource = messageSource;
         this.javaMailSender = javaMailSender;
     }

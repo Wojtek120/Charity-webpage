@@ -4,14 +4,11 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import pl.coderslab.charity.model.dto.EmailDto;
 import pl.coderslab.charity.model.dto.UserRegistrationDto;
 import pl.coderslab.charity.model.dto.VerificationTokenDto;
-import pl.coderslab.charity.model.entities.User;
 import pl.coderslab.charity.model.services.UserService;
 
 import javax.validation.Valid;
@@ -19,6 +16,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 @Controller
+@RequestMapping("/registration")
 public class RegistrationController {
 
     private final UserService userService;
@@ -29,7 +27,7 @@ public class RegistrationController {
         this.messageSource = messageSource;
     }
 
-    @GetMapping("/registration")
+    @GetMapping
     public String prepareRegistration(Model model){
         model.addAttribute("newUser", new UserRegistrationDto());
 
@@ -37,7 +35,7 @@ public class RegistrationController {
     }
 
 
-    @PostMapping("/registration")
+    @PostMapping
     public String registerNewUser(@Valid @ModelAttribute("newUser") UserRegistrationDto newUser, BindingResult result, WebRequest webRequest, Model model) {
 
         if(userService.isUserWithEmailExists(newUser.getEmail())) {
@@ -54,12 +52,12 @@ public class RegistrationController {
             return "registration";
         }
 
-        userService.addNewUser(newUser, webRequest);
+        userService.addNewUserAndSendVerificationMail(newUser, webRequest);
 
         return "authenticationInfo";
     }
 
-    @GetMapping("/registration/confirm/{token}")
+    @GetMapping("/confirm/{token}")
     public String confirmationOfRegistration(@PathVariable String token, Model model, WebRequest request){
         Locale locale = request.getLocale();
         VerificationTokenDto verificationToken = userService.getVerificationTokenByToken(token);
@@ -82,4 +80,43 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
+
+    @GetMapping("/resend")
+    public String prepareToResendRegistrationToken(Model model) {
+        model.addAttribute("email", new EmailDto());
+
+        return "resendRegistrationToken";
+    }
+
+    @PostMapping("/resend")
+    public String resendRegistrationToken(@Valid @ModelAttribute("email") EmailDto email, BindingResult result, Model model, WebRequest request) {
+        Locale locale = request.getLocale();
+
+        if(result.hasErrors()) {
+            return "resendRegistrationToken";
+        }
+
+        if(!userService.isUserWithEmailExists(email.getEmail())) {
+            String message = messageSource.getMessage("resend-message.user.doesnt.exist", null, locale);
+            model.addAttribute("message", message);
+            return "resendRegistrationToken";
+        }
+
+        if(userService.isUserEnabled(email.getEmail())) {
+            String message = messageSource.getMessage("resend-message.user.already.active", null, locale);
+            model.addAttribute("message", message);
+            return "resendRegistrationToken";
+        }
+
+        if(userService.isUserBanned(email.getEmail())) {
+            String message = messageSource.getMessage("resend-message.user.banned", null, locale);
+            model.addAttribute("message", message);
+            return "resendRegistrationToken";
+        }
+
+        userService.resendVerificationMail(email.getEmail(), request);
+
+        return "authenticationInfo";
+    }
+
 }

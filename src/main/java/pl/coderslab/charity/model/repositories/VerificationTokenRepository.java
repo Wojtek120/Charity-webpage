@@ -6,4 +6,5 @@ import pl.coderslab.charity.model.entities.VerificationToken;
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
 
     VerificationToken getByToken(String token);
+    VerificationToken getByUserEmail(String email);
 }

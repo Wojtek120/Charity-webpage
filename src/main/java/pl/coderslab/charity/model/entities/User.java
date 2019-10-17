@@ -22,6 +22,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Boolean enabled = Boolean.FALSE;
 
+    @Column(nullable = false)
+    private Boolean banned = Boolean.FALSE;
+
     @ElementCollection
     @CollectionTable(name = "user_authorities",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))

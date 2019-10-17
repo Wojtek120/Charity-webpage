@@ -20,6 +20,9 @@ import pl.coderslab.charity.model.repositories.VerificationTokenRepository;
 import pl.coderslab.charity.utils.AuthenticationFacade;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -45,7 +48,7 @@ public class UserService {
     }
 
     @Transactional
-    public void addNewUser(UserRegistrationDto userRegistrationDto, WebRequest webRequest) {
+    public void addNewUserAndSendVerificationMail(UserRegistrationDto userRegistrationDto, WebRequest webRequest) {
         User user = new User();
         UserDetails userDetails = new UserDetails();
         String encodedPassword = passwordEncoder.encode(userRegistrationDto.getPassword());
@@ -142,5 +145,26 @@ public class UserService {
             userRepository.save(user);
         }
 
+    }
+
+    @Transactional
+    public void resendVerificationMail(String email, WebRequest webRequest) {
+        User user = userRepository.getByEmail(email);
+        VerificationToken token = verificationTokenRepository.getByUserEmail(email);
+        Date date = new Date();
+        long dayInMs = 24 * 60 * 60 * 1000;
+        token.setExpiryDate(new Timestamp(date.getTime() + dayInMs));
+        verificationTokenRepository.save(token);
+
+        applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, webRequest.getLocale(), webRequest.getContextPath(), token.getToken()));
+    }
+
+
+    public boolean isUserEnabled(String email) {
+        return userRepository.getByEmail(email).getEnabled();
+    }
+
+    public boolean isUserBanned(String email) {
+        return userRepository.getByEmail(email).getBanned();
     }
 }

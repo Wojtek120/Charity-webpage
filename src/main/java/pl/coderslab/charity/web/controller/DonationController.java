@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.charity.model.dto.DonationDto;
 import pl.coderslab.charity.model.services.DonationService;
 
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @Slf4j
+@RequestMapping("/user")
 public class DonationController {
 
     private final DonationService donationService;

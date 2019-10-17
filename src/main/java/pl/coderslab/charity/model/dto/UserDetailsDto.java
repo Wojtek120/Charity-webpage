@@ -29,6 +29,8 @@ public class UserDetailsDto {
 
     private Boolean enabled;
 
+    private Boolean banned;
+
     public String getFirstAndLastName() {
         return firstName + " " + lastName;
     }
