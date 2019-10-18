@@ -25,10 +25,10 @@
 + [X] Create user and admin roles
 + [X] Create admin panel
 + [X] Add admin institutions panel
-+ [ ] Resend activation link
++ [X] Resend activation link
++ [X] Reset password via email
 + [ ] Add admin users panel
 + [ ] Add admin admins panel
-+ [ ] Reset password via email
 
 
 ## User profile creation with email verification via email
