@@ -2,18 +2,25 @@ package pl.coderslab.charity.model.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 import pl.coderslab.charity.events.OnRegistrationCompleteEvent;
+import pl.coderslab.charity.events.OnResetPasswordEvent;
 import pl.coderslab.charity.model.dto.PasswordDto;
 import pl.coderslab.charity.model.dto.UserDetailsDto;
 import pl.coderslab.charity.model.dto.UserRegistrationDto;
 import pl.coderslab.charity.model.dto.VerificationTokenDto;
+import pl.coderslab.charity.model.entities.PasswordResetToken;
 import pl.coderslab.charity.model.entities.User;
 import pl.coderslab.charity.model.entities.UserDetails;
 import pl.coderslab.charity.model.entities.VerificationToken;
 import pl.coderslab.charity.model.entities.embeddable.Role;
+import pl.coderslab.charity.model.repositories.PasswordResetTokenRepository;
 import pl.coderslab.charity.model.repositories.UserDetailsRepository;
 import pl.coderslab.charity.model.repositories.UserRepository;
 import pl.coderslab.charity.model.repositories.VerificationTokenRepository;
@@ -21,9 +28,7 @@ import pl.coderslab.charity.utils.AuthenticationFacade;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -33,16 +38,18 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final AuthenticationFacade authenticationFacade;
     private final ModelMapper modelMapper;
 
 
-    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder, ApplicationEventPublisher applicationEventPublisher, VerificationTokenRepository verificationTokenRepository, AuthenticationFacade authenticationFacade, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository, PasswordEncoder passwordEncoder, ApplicationEventPublisher applicationEventPublisher, VerificationTokenRepository verificationTokenRepository, PasswordResetTokenRepository passwordResetTokenRepository, AuthenticationFacade authenticationFacade, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.userDetailsRepository = userDetailsRepository;
         this.passwordEncoder = passwordEncoder;
         this.applicationEventPublisher = applicationEventPublisher;
         this.verificationTokenRepository = verificationTokenRepository;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
         this.authenticationFacade = authenticationFacade;
         this.modelMapper = modelMapper;
     }
@@ -159,6 +166,26 @@ public class UserService {
         applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(user, webRequest.getLocale(), webRequest.getContextPath(), token.getToken()));
     }
 
+    @Transactional
+    public void createResetPasswordTokenAndSendEmail(String email, WebRequest webRequest){
+
+        String token;
+        User user = userRepository.getByEmail(email);
+        PasswordResetToken resetToken = passwordResetTokenRepository.getByUserEmail(email);
+
+        if(resetToken == null) {
+            resetToken = new PasswordResetToken();
+            token = UUID.randomUUID().toString();
+            resetToken.setToken(token);
+            resetToken.setUser(user);
+        } else  {
+            resetToken.calculateExpiryDate();
+            token = resetToken.getToken();
+        }
+        passwordResetTokenRepository.save(resetToken);
+
+        applicationEventPublisher.publishEvent(new OnResetPasswordEvent(user, webRequest.getLocale(), webRequest.getContextPath(), token));
+    }
 
     public boolean isUserEnabled(String email) {
         return userRepository.getByEmail(email).getEnabled();
@@ -166,5 +193,35 @@ public class UserService {
 
     public boolean isUserBanned(String email) {
         return userRepository.getByEmail(email).getBanned();
+    }
+
+    public boolean validateResetPasswordToken(String token, Long userId) {
+        PasswordResetToken resetToken = passwordResetTokenRepository.getByToken(token);
+        Calendar calendar = Calendar.getInstance();
+
+        if ((resetToken != null)
+                && (resetToken.getUser().getId().equals(userId))
+                && ((resetToken.getExpiryDate().getTime() - calendar.getTime().getTime()) >= 0)) {
+
+            User user = resetToken.getUser();
+            authenticationFacade.setUserPasswordResetOnly(user);
+
+            return true;
+        }
+
+        return false;
+    }
+
+
+    @Transactional
+    public void resetPassword(PasswordDto passwordDto, Long userId) {
+
+        if (passwordDto.getPassword().equals(passwordDto.getRepeatedPassword())) {
+            User user = userRepository.getOne(userId);
+            String encodedPassword = passwordEncoder.encode(passwordDto.getPassword());
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+        }
+
     }
 }

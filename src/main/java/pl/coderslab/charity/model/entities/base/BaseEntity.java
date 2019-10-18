@@ -1,4 +1,4 @@
-package pl.coderslab.charity.model.entities;
+package pl.coderslab.charity.model.entities.base;
 
 import lombok.Getter;
 import lombok.Setter;

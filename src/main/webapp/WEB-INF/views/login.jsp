@@ -32,7 +32,7 @@
 
         <div class="form-group">
             <input type="password" id="password" name="password" placeholder="<spring:message key="logging.page-password"/>" />
-            <a href="#" class="btn btn--small btn--without-border reset-password"><spring:message key="logging.page-forgot.password"/></a>
+            <a href="<c:url value="/password/reset"/> " class="btn btn--small btn--without-border reset-password"><spring:message key="logging.page-forgot.password"/></a>
 
             <c:if test="${not empty param.error}">
                 <h3><spring:message key="logging.page-error.message"/></h3>

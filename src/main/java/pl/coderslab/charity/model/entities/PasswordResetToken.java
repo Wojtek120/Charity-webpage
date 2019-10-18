@@ -4,10 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.coderslab.charity.model.entities.base.BaseTokenEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @Getter @Setter
-public class VerificationToken extends BaseTokenEntity {
+public class PasswordResetToken extends BaseTokenEntity {
 
 }

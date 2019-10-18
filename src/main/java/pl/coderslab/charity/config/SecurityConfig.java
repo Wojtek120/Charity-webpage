@@ -48,6 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/").permitAll()
                     .antMatchers("/resources/**").permitAll()
                     .antMatchers("/registration", "/registration/**").permitAll()
+                    .antMatchers("/password/reset", "/password/reset/**").permitAll()
+                    .antMatchers("/password/reset/edit").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     .antMatchers("/donation", "/donation/**").hasRole("USER")
                     .antMatchers("/admin", "/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
