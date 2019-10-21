@@ -1,9 +1,7 @@
 package pl.coderslab.charity.web.controller;
 
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +14,6 @@ import pl.coderslab.charity.model.dto.EmailDto;
 import pl.coderslab.charity.model.dto.PasswordDto;
 import pl.coderslab.charity.model.services.UserService;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Locale;
 
@@ -35,7 +32,7 @@ public class PasswordResetController {
     public String prepareMailToWhichPasswordWillBeReseated(Model model) {
         model.addAttribute("email", new EmailDto());
 
-        return "resetPassword";
+        return "resendRegistrationToken";
     }
 
     @PostMapping("/password/reset")
@@ -43,7 +40,7 @@ public class PasswordResetController {
         Locale locale = request.getLocale();
 
         if(result.hasErrors()) {
-            return "resetPassword";
+            return "resendRegistrationToken";
         }
 
         if(!userService.isUserWithEmailExists(email.getEmail())) {

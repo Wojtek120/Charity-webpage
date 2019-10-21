@@ -2,10 +2,6 @@ package pl.coderslab.charity.model.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
@@ -28,7 +24,9 @@ import pl.coderslab.charity.utils.AuthenticationFacade;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -167,18 +165,18 @@ public class UserService {
     }
 
     @Transactional
-    public void createResetPasswordTokenAndSendEmail(String email, WebRequest webRequest){
+    public void createResetPasswordTokenAndSendEmail(String email, WebRequest webRequest) {
 
         String token;
         User user = userRepository.getByEmail(email);
         PasswordResetToken resetToken = passwordResetTokenRepository.getByUserEmail(email);
 
-        if(resetToken == null) {
+        if (resetToken == null) {
             resetToken = new PasswordResetToken();
             token = UUID.randomUUID().toString();
             resetToken.setToken(token);
             resetToken.setUser(user);
-        } else  {
+        } else {
             resetToken.calculateExpiryDate();
             token = resetToken.getToken();
         }
@@ -197,11 +195,10 @@ public class UserService {
 
     public boolean validateResetPasswordToken(String token, Long userId) {
         PasswordResetToken resetToken = passwordResetTokenRepository.getByToken(token);
-        Calendar calendar = Calendar.getInstance();
 
-        if ((resetToken != null)
-                && (resetToken.getUser().getId().equals(userId))
-                && ((resetToken.getExpiryDate().getTime() - calendar.getTime().getTime()) >= 0)) {
+        if (resetToken != null
+                && resetToken.getUserId().equals(userId)
+                && resetToken.isValid()) {
 
             User user = resetToken.getUser();
             authenticationFacade.setUserPasswordResetOnly(user);
@@ -212,6 +209,10 @@ public class UserService {
         return false;
     }
 
+    public boolean isVerificationTokenValid(VerificationTokenDto verificationTokenDto) {
+        VerificationToken token = verificationTokenRepository.getOne(verificationTokenDto.getId());
+        return token.isValid();
+    }
 
     @Transactional
     public void resetPassword(PasswordDto passwordDto, Long userId) {

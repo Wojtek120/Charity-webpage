@@ -68,8 +68,7 @@ public class RegistrationController {
             return "authenticationError";
         }
 
-        Calendar calendar = Calendar.getInstance();
-        if ((verificationToken.getExpiryDate().getTime() - calendar.getTime().getTime()) <= 0) {
+        if (!userService.isVerificationTokenValid(verificationToken)) {
             String message = messageSource.getMessage("authentication-message.token.expired", null, locale);
             model.addAttribute("message", message);
             return "authenticationError";

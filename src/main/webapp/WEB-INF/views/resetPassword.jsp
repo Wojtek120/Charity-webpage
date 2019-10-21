@@ -16,8 +16,8 @@
     <h2><spring:message key="edit.password-title"/></h2>
     <form:form method="post" modelAttribute="passwordDto">
         <div class="form-group">
-            <h3>Hasło</h3>
             <spring:message key="edit.password-password" var="password"/>
+            <h3>${password}</h3>
             <form:input path="password" type="password" placeholder="${password}"/>
             <h3><form:errors path="password"/></h3>
         </div>

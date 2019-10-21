@@ -9,5 +9,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter @Setter
 public class PasswordResetToken extends BaseTokenEntity {
-
+    public Long getUserId() {
+        return user.getId();
+    }
 }

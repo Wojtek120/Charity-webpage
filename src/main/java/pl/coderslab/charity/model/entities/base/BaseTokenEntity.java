@@ -10,18 +10,18 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Calendar;
 
 @MappedSuperclass
-@Getter @Setter
-public abstract class BaseTokenEntity extends BaseEntity implements Serializable{
+@Getter
+@Setter
+public abstract class BaseTokenEntity extends BaseEntity implements Serializable {
     private static final int EXPIRATION_HOURS = 24;
 
     private String token;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    protected User user;
 
     private Timestamp expiryDate;
 
@@ -30,8 +30,11 @@ public abstract class BaseTokenEntity extends BaseEntity implements Serializable
     }
 
     public void calculateExpiryDate() {
-        Calendar calendar = Calendar.getInstance();
         int expirationTime = EXPIRATION_HOURS * 60 * 60 * 1000;
-        this.expiryDate = new Timestamp(calendar.getTimeInMillis() + expirationTime);
+        this.expiryDate = new Timestamp(System.currentTimeMillis() + expirationTime);
+    }
+
+    public boolean isValid() {
+        return expiryDate.getTime() - System.currentTimeMillis() >= 0;
     }
 }
